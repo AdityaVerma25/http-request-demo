@@ -1,0 +1,8 @@
+2026-10-07 20:56:24  INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-10-07 20:56:24  INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-10-07 20:56:24  INFO  c.e.d.DemoProjectApplication - Started DemoProjectApplication in 6.663 seconds (process running for 7.242)
+2026-10-07 20:56:24  WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /api-spec endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-10-07 20:56:24  WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /api-docs-ui endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-10-07 20:56:40  INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-07 20:56:40  INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-10-07 20:56:40  INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
