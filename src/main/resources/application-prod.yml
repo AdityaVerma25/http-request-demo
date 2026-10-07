@@ -1,0 +1,20 @@
+springdoc:
+  api-docs:
+    path: /api-spec
+  swagger-ui:
+    path: /api-docs-ui
+spring:
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost:3306/bootcamp
+    password: root
+  application:
+    name: demo-project
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'false'
+    show-sql: 'false'
+logging:
+  level:
+    root: OFF
