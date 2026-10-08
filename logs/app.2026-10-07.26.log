@@ -1,9 +1,0 @@
-2026-10-07 20:56:23  INFO  o.s.b.f.a.AutowiredAnnotationBeanPostProcessor - Autowired annotation is not supported on static fields: private static com.engineerindigest.demo_project.respository.UserRepository com.engineerindigest.demo_project.services.UserService.userRepository
-2026-10-07 20:56:23  WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-10-07 20:56:24  WARN  o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 6c4442ee-4c2d-4738-849d-c89e8f9bf2af
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-10-07 20:56:24  INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
