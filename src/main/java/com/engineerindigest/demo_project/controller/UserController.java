@@ -34,6 +34,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
 
+
     @GetMapping("/")
     @Operation(summary = "API for get all users list")
     public List<User> getUser() {
@@ -49,11 +50,10 @@ public class UserController {
                 .body(userService.getUserById(userId));
     }
 
-    @PostMapping("/create-user")
+    @PostMapping
     @Operation(summary = "API for crate a new user")
     public UserResponse createUser(@RequestBody @Valid UserRequest userRequest) {
-        User user = userMapper.toUser(userRequest);
-        return userMapper.getUserResponse(userRepository.save(user));
+        return userService.createUser(userRequest);
     }
 
     @PutMapping

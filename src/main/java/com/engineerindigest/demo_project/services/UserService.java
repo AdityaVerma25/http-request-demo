@@ -10,20 +10,25 @@ import com.engineerindigest.demo_project.respository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private static UserMapper userMapper;
-    @Autowired
-    private static UserRepository userRepository;
 
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    //Method for fetch all user
     public List<User> getAllUsers() {
         log.info("Fetching all users");
         List<User> all = userRepository.findAll();
@@ -31,7 +36,24 @@ public class UserService {
         return all;
     }
 
-    public User getUserById(int userId) {
+
+    public UserResponse createUser(UserRequest userRequest) {
+
+        log.info("User is creating,{}", userRequest.getName());
+        User user = userMapper.toUser(userRequest);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        UserResponse userResponse = userMapper.getUserResponse(userRepository.save(user));
+        log.info("User successfully created {}", userResponse.getName());
+        return userResponse;
+    }
+
+    public User getUserById(int userId)  {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedInUser = (User) authentication.getPrincipal();
+        if (loggedInUser.getId() != userId && !loggedInUser.getRole().equals("ADMIN")) {
+            log.warn("User{} tried to access data of user {} ", loggedInUser.getId(), userId);
+
+        }
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             log.warn("User not found with userId: {}", userId);

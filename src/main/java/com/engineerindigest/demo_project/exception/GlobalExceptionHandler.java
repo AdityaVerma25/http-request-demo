@@ -1,15 +1,18 @@
 package com.engineerindigest.demo_project.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.stream.Stream;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ProblemDetail handleResourceNotFound(ResourceNotFoundException ex, HttpServletRequest request) {
@@ -17,6 +20,15 @@ public class GlobalExceptionHandler {
         problemDetail.setTitle("Resource Not Found");
         return problemDetail;
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ProblemDetail handleResourceNotFound(AccessDeniedException ex, HttpServletRequest request) {
+        log.warn("Access denied {}", ex.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        problemDetail.setTitle("Access denied");
+        return problemDetail;
+    }
+
 
     //Method Argument Valid Exception
     @ExceptionHandler(MethodArgumentNotValidException.class)
