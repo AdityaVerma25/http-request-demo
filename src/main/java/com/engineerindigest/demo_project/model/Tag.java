@@ -12,19 +12,17 @@ import java.util.List;
 @Entity
 @Table(name = "tags")
 public class Tag {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "tags")
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    List<Post> posts;
-
+    private List<Post> posts;
 
 }

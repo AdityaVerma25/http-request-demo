@@ -7,11 +7,11 @@ import lombok.Data;
 
 @Data
 public class UserPatchRequest {
-    @Schema(description = "Full name of user", example = "Akshit Sharma")
+    @Schema(description = "Full name of the user", example = "Akshit Sharma")
     private String name;
 
     @Min(value = 1, message = "Age must be at least 1")
-    @Max(value = 70, message = "Age must be less than 70")
-    @Schema(description = "Age of user", example = "25")
+    @Max(value = 70, message = "Age cannot exceed 70")
+    @Schema(description = "Age of the user", example = "25")
     private Integer age;
 }

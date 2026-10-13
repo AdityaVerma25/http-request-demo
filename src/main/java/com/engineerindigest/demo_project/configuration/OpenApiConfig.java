@@ -8,11 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
     @Bean
-    public OpenAPI configure() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("User Management API")
-                        .version("1.0")
-                        .description("CRUD APIs for managing users"));
+    public OpenAPI customOpenApi(){
+        return new OpenAPI().info(new Info().title("User Management API").version("1.0").description("CRUD APIs for managing users"));
     }
 }

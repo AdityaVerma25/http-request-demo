@@ -3,15 +3,11 @@ package com.engineerindigest.demo_project.controller;
 import com.engineerindigest.demo_project.dto.UserPatchRequest;
 import com.engineerindigest.demo_project.dto.UserRequest;
 import com.engineerindigest.demo_project.dto.UserResponse;
-
-import com.engineerindigest.demo_project.mappers.UserMapper;
 import com.engineerindigest.demo_project.model.User;
-import com.engineerindigest.demo_project.respository.UserRepository;
 import com.engineerindigest.demo_project.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,58 +22,53 @@ import java.util.*;
 @Slf4j
 public class UserController {
 
-//    private static final Logger logger = LoggerFactory.getLogger(UserController.class); we used @SLF4J
 
+    private  final UserService userService;
 
-    private final UserMapper userMapper;
-
-    private final UserRepository userRepository;
-    private final UserService userService;
-
-    @GetMapping("/")
-    @Operation(summary = "API for get all users list")
-    public List<User> getUser() {
+    @GetMapping
+    @Operation(summary = "Get all users", description = "Returns a list of all users in the system")
+    public List<User> getUsers() {
         return userService.getAllUsers();
-
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Find a user from databases by Id")
+    @Operation(summary = "Get user by ID", description = "Returns a single user for the given ID. Throws 404 if not found.")
     public ResponseEntity<User> getUser(@PathVariable(name = "id") int userId) {
         return ResponseEntity.ok()
                 .header("something", "good")
                 .body(userService.getUserById(userId));
     }
 
-    @PostMapping("/create-user")
-    @Operation(summary = "API for crate a new user")
+    @PostMapping
+    @Operation(summary = "Create a new user", description = "Accepts name and age, validates them, and creates a new user")
     public UserResponse createUser(@RequestBody @Valid UserRequest userRequest) {
-        User user = userMapper.toUser(userRequest);
-        return userMapper.getUserResponse(userRepository.save(user));
+        return userService.createUser(userRequest);
     }
 
     @PutMapping
-    @Operation(summary = "Replace user details", description = "Replace all info of an user")
+    @Operation(summary = "Replace a user", description = "Completely replaces user data for the given ID")
     public User replaceUser(@RequestParam int id, @RequestBody @Valid UserRequest userRequest) {
         return userService.replaceUser(id, userRequest);
     }
 
     @PatchMapping
-    @Operation(summary = "Partially update a user", description = "Updates only the provided fields for the given user")
-    public void updateUser(@RequestParam int id, @RequestBody @Valid UserPatchRequest userPatchRequest) {
-        userService.updateUser(id, userPatchRequest);
+    @Operation(summary = "Partially update a user", description = "Updates only the provided fields for the given user ID")
+    public User updateUser(@RequestParam int id, @RequestBody @Valid UserPatchRequest userRequest) {
+        return userService.updateUser(id, userRequest);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete an user")
-    public void deleteUser(@PathVariable int id) {
+    @Operation(summary = "Delete a user", description = "Deletes the user with the given ID")
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    @Operation(summary = "Find user by name")
-    public UserResponse getUserByName(@RequestParam String name) {
-        return userService.getUserByName(name);
+    @Operation(summary = "Search users by name", description = "Returns users whose name contains the search term")
+    public List<User> searchUsers(@RequestParam String name) {
+        return userService.searchUsers(name);
     }
+
 }
 

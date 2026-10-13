@@ -10,12 +10,20 @@ import lombok.Data;
 @Data
 public class UserRequest {
     @NotBlank(message = "Name is required")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 character")
-    @Schema(name = "Name of the user", example = "John Hoe")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+    @Schema(description = "Full name of the user", example = "Akshit Sharma")
     private String name;
 
-    @Min(value = 1, message = "Age must be 1")
-    @Max(value = 70, message = "Age must be less than 70")
-    @Schema(name = "Age of User", example = "25")
+    @Min(value = 1, message = "Age must be at least 1")
+    @Max(value = 70, message = "Age cannot exceed 70")
+    @Schema(description = "Age of the user", example = "25")
     private int age;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Schema(description = "Password for the user", example = "password123")
+    private String password;
+
+    private String role;
+
 }

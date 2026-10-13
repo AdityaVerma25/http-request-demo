@@ -1,2 +1,5 @@
-2026-10-07 16:59:09  INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-10-07 16:59:09  INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-10-13 12:27:03  INFO  c.e.d.services.UserService - User found: Raju
+2026-10-13 12:47:04  INFO  c.e.d.controller.AuthController - Login attempt for user: Aditya
+2026-10-13 12:47:05  INFO  c.e.d.services.RefreshTokenService - Creating refresh token for user: Aditya
+2026-10-13 12:47:05  INFO  c.e.d.controller.AuthController - Login successful for user: Aditya
+2026-10-13 12:47:33  INFO  c.e.d.services.UserService - User found: Aditya

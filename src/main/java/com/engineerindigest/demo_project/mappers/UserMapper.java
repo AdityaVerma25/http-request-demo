@@ -12,8 +12,7 @@ public interface UserMapper {
 
     User toUser(UserRequest userRequest);
 
-    User patchUser(UserPatchRequest userPatchRequest);
+    User toUser(UserPatchRequest userRequest);
 
-    UserResponse getUserResponse(User user);
-
+    UserResponse toUserResponse(User user);
 }

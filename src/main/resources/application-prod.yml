@@ -17,4 +17,8 @@ spring:
     show-sql: 'false'
 logging:
   level:
-    root: OFF
+    root: INFO
+jwt:
+  secret: f9CDRTUGjuvYfLCpnAwjFDhHcwal4XhuFt73ZcXjty06NKcmLqQhLcfbQgC
+  expiration: 3600000
+  refresh-expiration: 604800000
