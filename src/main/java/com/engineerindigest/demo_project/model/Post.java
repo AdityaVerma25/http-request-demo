@@ -14,19 +14,12 @@ import java.util.List;
 @Entity
 @Table(name = "posts")
 public class Post {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "title")
     private String title;
-
-    @Column(name = "content")
     private String content;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt =LocalDateTime.now();
+    private LocalDateTime createdAt =  LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -34,10 +27,11 @@ public class Post {
     private User user;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "post_tags",
-            joinColumns =
-            @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Tag> tags;

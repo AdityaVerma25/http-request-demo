@@ -11,11 +11,13 @@ import org.apache.commons.lang3.builder.ToStringExclude;
 @Entity
 @Table(name = "profiles")
 public class Profile {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String bio;
+
     @Column(name = "avatar_url")
     private String avatarUrl;
 

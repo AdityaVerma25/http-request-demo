@@ -21,26 +21,23 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expiration;
 
-
     public String generateToken(UserDetails userDetails) {
-        return
-                Jwts
-                        .builder()
-                        .subject(userDetails.getUsername())
-                        .issuedAt(new Date(System.currentTimeMillis()))
-                        .expiration(new Date(System.currentTimeMillis() + expiration))
-                        .signWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
-                        .compact();
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .compact();
     }
 
-    public String extractUserName(String token) {
-        return
-                Jwts
-                        .parser()
-                        .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
-                        .build()
-                        .parseSignedClaims(token)
-                        .getPayload()
-                        .getSubject();
+    public String extractUsername(String token) {
+        return Jwts
+                .parser()
+                .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
     }
+
 }

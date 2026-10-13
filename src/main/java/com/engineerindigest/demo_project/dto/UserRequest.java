@@ -24,5 +24,6 @@ public class UserRequest {
     @Schema(description = "Password for the user", example = "password123")
     private String password;
 
+    private String role;
 
 }
