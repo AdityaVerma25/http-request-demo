@@ -8,6 +8,10 @@ spring:
     username: root
     url: jdbc:mysql://localhost:3306/bootcamp
     password: root
+  data:
+    redis:
+      host: localhost
+      port: 6379
   application:
     name: demo-project
   jpa:
@@ -18,3 +22,7 @@ spring:
 logging:
   level:
     root: INFO
+jwt:
+  secret: f9CDRTUGjuvYfLCpnAwjFDhHcwal4XhuFt73ZcXjty06NKcmLqQhLcfbQgC
+  expiration: 3600000
+  refresh-expiration: 604800000

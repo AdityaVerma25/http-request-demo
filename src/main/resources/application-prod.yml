@@ -8,6 +8,10 @@ spring:
     username: root
     url: jdbc:mysql://localhost:3306/bootcamp
     password: root
+  data:
+    redis:
+      host: localhost
+      port: 6379
   application:
     name: demo-project
   jpa:

@@ -7,10 +7,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.ToStringExclude;
 
+import java.io.Serializable;
+
 @Data
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

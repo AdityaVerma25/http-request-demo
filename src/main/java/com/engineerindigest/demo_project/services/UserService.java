@@ -1,5 +1,6 @@
 package com.engineerindigest.demo_project.services;
 
+import com.engineerindigest.demo_project.dto.UserListResponse;
 import com.engineerindigest.demo_project.dto.UserPatchRequest;
 import com.engineerindigest.demo_project.dto.UserRequest;
 import com.engineerindigest.demo_project.dto.UserResponse;
@@ -11,13 +12,21 @@ import com.engineerindigest.demo_project.security.AccessControl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 import java.nio.file.AccessDeniedException;
+import java.time.Duration;
 import java.util.List;
 
 
@@ -34,15 +43,17 @@ public class UserService {
 
     private final AccessControl accessControl;
 
-    public List<User> getAllUsers() {
+    @Cacheable(value = "users", key = "'all'")
+    public UserListResponse getAllUsers() {
         accessControl.allowOnlyAdmin();
         log.info("Fetching all users");
-        List<User> users = userRepository.findAll();
+        List<UserResponse> users = userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
         log.info("Total users found: {}", users.size());
-        return users;
+        return new UserListResponse(users);
     }
 
-    public User getUserById(int userId){
+    @Cacheable(value = "user", key = "#userId")
+    public UserResponse getUserById(int userId) {
         accessControl.allowSameUserOrAdmin(userId);
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
@@ -51,7 +62,7 @@ public class UserService {
                     "User with id " + userId + " not found");
         }
         log.info("User found: {}", user.getName());
-        return user;
+        return userMapper.toUserResponse(user);
     }
 
     public UserResponse createUser(UserRequest userRequest) {
@@ -69,15 +80,17 @@ public class UserService {
         return response;
     }
 
-    public User replaceUser(int id, UserRequest userRequest) {
+    @CachePut(value = "user", key = "#id")
+    public UserResponse replaceUser(int id, UserRequest userRequest) {
         accessControl.allowSameUserOrAdmin(id);
         log.info("Replacing user with id: {}", id);
         User user = userMapper.toUser(userRequest);
         user.setId(id);
-        return userRepository.save(user);
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    public User updateUser(int id, UserPatchRequest userRequest) {
+    @CachePut(value = "user", key = "#id")
+    public UserResponse updateUser(int id, UserPatchRequest userRequest) {
         accessControl.allowSameUserOrAdmin(id);
         log.info("Updating user with id: {}", id);
         User existingUser = userRepository.findById(id)
@@ -89,9 +102,10 @@ public class UserService {
         if (newUser.getName() != null && !newUser.getName().isBlank()) {
             existingUser.setName(newUser.getName());
         }
-        return userRepository.save(existingUser);
+        return userMapper.toUserResponse(userRepository.save(existingUser));
     }
 
+    @CacheEvict(value = "user", key = "#id")
     public void deleteUser(int id) {
         accessControl.allowOnlyAdmin();
         log.info("Deleting user with id: {}", id);

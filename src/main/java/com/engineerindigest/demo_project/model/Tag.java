@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "tags")
-public class Tag {
+public class Tag  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

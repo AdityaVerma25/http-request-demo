@@ -1,7 +1,0 @@
-2026-10-13 14:06:46  INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-10-13 14:06:46  INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-10-13 14:06:46  INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-2026-10-13 14:06:47  WARN  c.e.d.c.JwtAuthenticationFilter - JWT authentication failed: JWT expired 1182220 milliseconds ago at 2026-10-13T08:17:05.000Z. Current time: 2026-10-13T08:36:47.220Z. Allowed clock skew: 0 milliseconds.
-2026-10-13 14:06:50  WARN  c.e.d.c.JwtAuthenticationFilter - JWT authentication failed: JWT expired 1185382 milliseconds ago at 2026-10-13T08:17:05.000Z. Current time: 2026-10-13T08:36:50.382Z. Allowed clock skew: 0 milliseconds.
-2026-10-13 14:07:02  WARN  c.e.d.c.JwtAuthenticationFilter - JWT authentication failed: JWT expired 1197978 milliseconds ago at 2026-10-13T08:17:05.000Z. Current time: 2026-10-13T08:37:02.978Z. Allowed clock skew: 0 milliseconds.
-2026-10-13 14:07:03  INFO  c.e.d.controller.AuthController - Login attempt for user: Aditya
